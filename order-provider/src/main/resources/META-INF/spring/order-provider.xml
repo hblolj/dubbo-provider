@@ -9,7 +9,8 @@
 
     <dubbo:application name="order-provider" owner="hblolj"/>
 
-    <dubbo:registry address="N/A"/>
+    <!--<dubbo:registry address="N/A"/>-->
+    <dubbo:registry protocol="zookeeper" address="0.0.0.0:2181"/>
 
     <dubbo:protocol name="dubbo" port="20880"/>
     
