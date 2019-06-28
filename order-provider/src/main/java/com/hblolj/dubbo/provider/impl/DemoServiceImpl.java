@@ -1,5 +1,7 @@
-package com.hblolj.dubbo.provider;
+package com.hblolj.dubbo.provider.impl;
 
+
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hblolj.dubbo.provider.DemoService;
 
 /**
@@ -8,6 +10,7 @@ import com.hblolj.dubbo.provider.DemoService;
  * @Description:
  * @Version:
  **/
+@Service
 public class DemoServiceImpl implements DemoService {
 
     public String sayHello(String name) {
