@@ -9,4 +9,6 @@ package com.hblolj.dubbo.provider;
 public interface DemoService {
 
     String sayHello(String name);
+
+    String sayBye(String name);
 }

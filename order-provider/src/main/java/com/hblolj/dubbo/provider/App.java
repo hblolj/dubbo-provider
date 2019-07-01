@@ -1,6 +1,7 @@
 package com.hblolj.dubbo.provider;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 
@@ -14,8 +15,8 @@ public class App {
     public static void main(String[] args) throws IOException {
 //        Main.main(args);
 
-//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/provider.xml");
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ProviderConfiguration.class);
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/provider.xml");
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ProviderConfiguration.class);
         context.start();
         System.in.read(); // 按任意键退出
     }

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
  * @Description:
  * @Version:
  **/
-@Configuration
+//@Configuration
 @EnableDubbo(scanBasePackages = "com.hblolj.dubbo.provider.impl")
 @ComponentScan("com.hblolj.dubbo.provider")
 @PropertySource("classpath:/provider.properties")

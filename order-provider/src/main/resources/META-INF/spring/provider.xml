@@ -11,15 +11,28 @@
     <dubbo:application name="provider" owner="hblolj"/>
 
     <!-- 注册中心地址协议，支持dubbo, multicast, zookeeper, redis, consul(2.7.1), sofa(2.7.2), etcd(2.7.2), nacos(2.7.2)等协议 -->
-    <dubbo:registry protocol="multicast" address="225.1.2.3:7777"/>
+    <dubbo:registry protocol="zookeeper" address="0.0.0.0:2181"/>
 
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="20880"/>
 
+    <dubbo:protocol name="rmi" port="1099"/>
+
+    <dubbo:protocol name="hessian" port="8080"/>
+
+    <!-- 不同服务不同协议 -->
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.hblolj.dubbo.provider.DemoService" ref="demoService"/>
+    <dubbo:service interface="com.hblolj.dubbo.provider.DemoService" ref="demoService1" version="1.0.0" protocol="dubbo"/>
 
-    <dubbo:annotation package="com.hblolj.dubbo.provider.impl"/>
+    <!-- 多协议暴露服务 -->
+    <!-- 多版本 -->
+    <dubbo:service interface="com.hblolj.dubbo.provider.DemoService" ref="demoService2" version="1.0.1" protocol="dubbo,hessian"/>
 
-    <bean id="demoService" class="com.hblolj.dubbo.provider.impl.DemoServiceImpl"/>
+    <dubbo:service interface="com.hblolj.dubbo.provider.ProtocolService" ref="protocolService" version="1.0.0" protocol="rmi"/>
+    <!--<dubbo:annotation package="com.hblolj.dubbo.provider.impl"/>-->
+
+    <bean id="demoService1" class="com.hblolj.dubbo.provider.impl.DemoServiceImpl"/>
+    <bean id="demoService2" class="com.hblolj.dubbo.provider.impl.DemoServiceImpl2"/>
+
+    <bean id="protocolService" class="com.hblolj.dubbo.provider.impl.ProtocolServiceImpl"/>
 </beans>
