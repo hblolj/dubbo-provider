@@ -8,21 +8,30 @@
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="provider" owner="hblolj"/>
+    <dubbo:application name="provider" owner="hblolj">
+        <!--<dubbo:parameter key="qos.port" value="22222"/>-->
+        <dubbo:parameter key="qos.port" value="33333"/>
+    </dubbo:application>
 
     <!-- 注册中心地址协议，支持dubbo, multicast, zookeeper, redis, consul(2.7.1), sofa(2.7.2), etcd(2.7.2), nacos(2.7.2)等协议 -->
-    <dubbo:registry id="colony" protocol="zookeeper" address="0.0.0.0:2181, 0.0.0.0:2182, 0.0.0.0:2183"/>
+    <dubbo:registry id="colony" protocol="zookeeper" address="0.0.0.0:2181, 0.0.0.0:2182, 0.0.0.0:2183" register="true"/>
 
     <!-- 多注册中心 -->
     <!-- 额外配置一个注册中心，不同服务注册到不同注册中心，不使用集群中的节点，因为集群节点会共享信息，不方便测试结果查看 -->
-    <dubbo:registry id="standalone" protocol="zookeeper" address="0.0.0.0:2184"/>
+    <dubbo:registry id="standalone" protocol="zookeeper" address="0.0.0.0:2184" register="true"/>
 
     <!-- 用dubbo协议在20880端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="20880"/>
+    <!--<dubbo:protocol name="dubbo" port="20880"/>-->
+    <dubbo:protocol name="dubbo" port="20881"/>
 
-    <dubbo:protocol name="rmi" port="1099"/>
+    <!--<dubbo:protocol name="rmi" port="1099"/>-->
+    <dubbo:protocol name="rmi" port="1098"/>
 
-    <dubbo:protocol name="hessian" port="8080"/>
+    <!--<dubbo:protocol name="hessian" port="8080" server="jetty"/>-->
+    <dubbo:protocol name="hessian" port="8088" server="jetty"/>
+
+    <!-- 设置服务绑定的主机地址 -->
+    <!--<dubbo:protocol host="169.254.98.109"/>-->
 
     <!-- 不同服务不同协议 -->
     <!-- 声明需要暴露的服务接口 -->
@@ -30,7 +39,8 @@
 
     <!-- 多协议暴露服务 -->
     <!-- 多版本 -->
-    <dubbo:service interface="com.hblolj.dubbo.provider.DemoService" ref="demoService2" version="1.0.1" protocol="dubbo,hessian" registry="colony"/>
+    <dubbo:service interface="com.hblolj.dubbo.provider.DemoService" ref="demoService2" version="1.0.1"
+                   protocol="dubbo,hessian" registry="colony" loadbalance="roundrobin" cluster="failsafe"/>
 
     <!-- 单独注册到一个 Zookeeper 上 -->
     <dubbo:service interface="com.hblolj.dubbo.provider.ProtocolService" ref="protocolService" version="1.0.0" protocol="rmi" registry="standalone"/>

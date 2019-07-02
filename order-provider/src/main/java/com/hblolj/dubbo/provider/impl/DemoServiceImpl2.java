@@ -27,7 +27,9 @@ public class DemoServiceImpl2 implements DemoService{
     }
 
     public String sayBye(String name) {
-        return "sayBye2";
+//        String s = "1号服务: sayBye2";
+        String s = "2号服务: sayBye2";
+        return s;
     }
 
     // 服务端异步执行 -> 2.7.0 之后才支持, 2.6.x 下会报 CompletableFuture 无法序列化问题
